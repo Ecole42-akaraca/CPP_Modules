@@ -1,4 +1,4 @@
-#include "easyfind.hpp"
+#include "Easyfind.hpp"
 /*
 	---> C++ Templated containers, iterators, algorithms / Şablonlu konteynerlar, yineliyiciler, algoritmalar <---
 	---> Easy find / Kolay bulmak <---
@@ -40,11 +40,11 @@ Not:
 */
 int main(){
 
-	std::vector<int> intVec; // double tipinde olsaydı, 30 değerini bulamayacaktı, lakin int tipinde olduğu için küsüratlı değer stracta alınmadı.
+	std::vector<int> intVec;
 
-	intVec.push_back(10.1);
-	intVec.push_back(20.2);
-	intVec.push_back(30.3);
+	intVec.push_back(10);
+	intVec.push_back(20);
+	intVec.push_back(30);
 
 	easyfind(intVec, 30);
 	easyfind(intVec, 50);
@@ -53,11 +53,11 @@ int main(){
 	std::vector<double> doubleVec;
 
 	doubleVec.push_back(5);
-	doubleVec.push_back(7.2);
+	doubleVec.push_back(7);
 	doubleVec.push_back(8.42);
 
 	easyfind(doubleVec, 7);
-	easyfind(doubleVec, 8.42); // aslında array içinde bulunan bir değer lakin subject bizden bunun int olarak ele alınmasını istiyor bu yüzden bulamıyor
+	easyfind(doubleVec, 8);
 	printer(doubleVec);
 
 //----------------------------------------------vector<std::string> için örnek------------------------------------------------------------------//
