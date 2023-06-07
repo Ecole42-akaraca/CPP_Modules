@@ -1,0 +1,71 @@
+#include "easyfind.hpp"
+/*
+	---> C++ Templated containers, iterators, algorithms / Şablonlu konteynerlar, yineliyiciler, algoritmalar <---
+	---> Easy find / Kolay bulmak <---
+	Subject Çeviri:
+		İlk kolay egzersiz, doğru adımlarla başlamak için harika bir fırsattır.
+		
+		easyfind adlı bir şablon fonksiyon yazın ve bir T türü kabul edin.
+		İki parametre alır.
+		İlk parametresi T türünde ve ikinci parametresi tamsayıdır.
+		
+		T'nin bir tamsayı konteyneri olduğu varsayımıyla, bu işlev, ilk parametredeki ikinci parametrenin ilk oluşumunu bulmalıdır.
+		
+		Eğer bir oluşum bulunamazsa, istisna fırlatabilirsiniz veya kendi belirleyeceğiniz bir hata değeri döndürebilirsiniz.
+		İlham almak için, standart konteynerlerin nasıl davrandığını inceleyin.
+		
+		Tabii ki, her şeyin beklediğiniz gibi çalıştığından emin olmak için kendi testlerinizi uygulayın ve teslim edin.
+
+		!!! Bağlantılı konteynerleri ele almanız gerekmez.
+
+Not:
+	Templated containers nedir?
+		Bu, bir şablon (template) sınıfının, içinde birden fazla veri türü barındırabilen bir veri yapısı veya koleksiyon oluşturması anlamına gelir.
+		Örneğin, bir vektör, bir dizi veya bir liste, C++'da şablonlu konteynerlar örnekleri olabilir.
+		Bu konteynırlar, kodun tekrar kullanılabilirliğini artırarak ve bir veri yapısının birden fazla veri türü ile kullanılabilmesini sağlayarak programlama dilinin esnekliğini artırır.
+
+	Iterators nedir?
+		Bir veri yapısındaki elemanlara teker teker erişebilmek için kullanılan nesnelerdir.
+		Bir veri yapısı üzerinde işlem yapabilmek için öncelikle iterator kullanarak veri yapısı içinde hareket edilir.
+		Örneğin, bir STL (Standard Template Library) konteynırı içindeki elemanlara erişmek için iterator kullanılır.
+		Iteratorler, veri yapısının tipine göre değişiklik gösterir ve genellikle veri yapısının içinde bulunan elemanların sayısı, mevcut elemana erişme ve bir sonraki elemana geçme gibi fonksiyonları içerirler.
+
+	Algorithms nedir?
+		Algoritmalar, belirli bir amaç doğrultusunda sıralanmış mantıksal adımlar kümesidir.
+		Bilgisayar biliminde, belirli bir işlevi yerine getirmek için kodlanmış bir dizi adımdır.
+		C++ Standard Library, STL (Standard Template Library) adı altında bir dizi hazır algoritma sunar.
+		Bu algoritmalar, sıklıkla sıralama, arama, değiştirme ve özetleme işlemlerini gerçekleştirmek için kullanılır.
+		Algoritmalar, genellikle STL konteynırları üzerindeki verileri işlemek için kullanılan iteratorlarla birlikte kullanılır.
+
+*/
+int main(){
+
+	std::vector<int> intVec; // double tipinde olsaydı, 30 değerini bulamayacaktı, lakin int tipinde olduğu için küsüratlı değer stracta alınmadı.
+
+	intVec.push_back(10.1);
+	intVec.push_back(20.2);
+	intVec.push_back(30.3);
+
+	easyfind(intVec, 30);
+	easyfind(intVec, 50);
+	printer(intVec);
+
+	std::vector<double> doubleVec;
+
+	doubleVec.push_back(5);
+	doubleVec.push_back(7.2);
+	doubleVec.push_back(8.42);
+
+	easyfind(doubleVec, 7);
+	easyfind(doubleVec, 8.42); // aslında array içinde bulunan bir değer lakin subject bizden bunun int olarak ele alınmasını istiyor bu yüzden bulamıyor
+	printer(doubleVec);
+
+//----------------------------------------------vector<std::string> için örnek------------------------------------------------------------------//
+	// std::vector<std::string> stringVec;
+	// stringVec.push_back("Jack");
+	// stringVec.push_back("Carl");
+	// stringVec.push_back("Alice");
+	// stringVec.push_back("Emanuel");
+	// printer(stringVec);
+	return (0);
+}

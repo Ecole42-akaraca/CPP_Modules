@@ -1,0 +1,92 @@
+#!/bin/bash
+#eğer permission denied alınırsa "chmod 755 tester" ile izin verin
+#çalıştırmak için "./tester" yazmanız yeterli aynı dizinde Types derlenmiş dosyası bulunması yeterlidir.
+test() {
+	echo "./Types" "$*"
+	./Types $@
+	echo "check output and press any key to continue"
+	read -n1
+	echo ""
+}
+
+if [ "$1" = "-v" ]; then
+	verbose="true"
+else
+	verbose="false"
+fi
+
+echo "Make the project"
+if ! make; then
+	exit 1
+fi
+echo ""
+
+echo "Start the tests:"
+
+test c
+
+test a
+
+test 0
+
+test -42
+
+test 42
+
+test 0.0f
+
+test -4.2f
+
+test 4.2f
+
+test -inff
+
+test +inff
+
+test nanf
+
+test 0.0
+
+test -4.2
+
+test 4.2
+
+test -inf
+
+test +inf
+
+test nan
+
+test .256f
+
+test -.256f
+
+test 18.f
+
+test .
+
+test f
+
+test -
+
+test 0.
+
+test 5000000000000000000000000000000000000000.0
+
+test .f
+
+test -.f
+
+test a b c
+
+test deneme
+
+test 18f
+
+test 4.24.2
+
+test 0.256f12
+
+test -3123.12+31f
+
+test
