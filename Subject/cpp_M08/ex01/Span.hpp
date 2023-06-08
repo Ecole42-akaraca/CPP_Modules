@@ -1,29 +1,29 @@
 #ifndef SPAN_HPP
  #define SPAN_HPP
 
-#include <iostream>
-#include <math.h>
+# include <iostream>
+# include <algorithm>
+# include <vector>
+# include <list>
 
 class Span{
 private:
 	unsigned int	_n;
-	int*			_array;
-	unsigned int	_filled;
+	std::list<int>	_list; // list yapısında new ile yer açmaya gerek yok.
 
 public:
 	Span( void );
 	Span( unsigned int N );
-	// Span( const Span &ref );
+	Span( const Span &ref );
 	~Span( void );
 
-	Span &operator=( const Span &ref );
-	int	&operator[]( unsigned int i ) const;
+	Span	&operator=( const Span &ref );
 
 	void	addNumber( unsigned int N );
 	int		shortestSpan( void );
 	int		longestSpan( void );
 
-	unsigned int	getSize( void );
+	const std::list<int>* getList( void ) const;
 
 	class OutOfBoundsException : public std::exception{
 		public:
@@ -36,6 +36,6 @@ public:
 	};
 };
 
-std::ostream &operator<<( std::ostream &os, Span &obj );
+std::ostream &operator<<( std::ostream &os, const Span &obj );
 
 #endif
