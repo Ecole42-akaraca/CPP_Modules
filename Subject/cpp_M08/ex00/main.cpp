@@ -37,6 +37,24 @@ Not:
 		Bu algoritmalar, sıklıkla sıralama, arama, değiştirme ve özetleme işlemlerini gerçekleştirmek için kullanılır.
 		Algoritmalar, genellikle STL konteynırları üzerindeki verileri işlemek için kullanılan iteratorlarla birlikte kullanılır.
 
+Eva Rules:
+As usual, there has to be the main function that contains enough tests to prove the program work as expected.
+If there isn't, do not grade tihs exercise.
+If any non-interface class is not in orthodox canonical class form, do not grade this exercise.
+
+	>	Her zaman olduğu gibi, programın beklendiği gibi çalıştığını kanıtlamak için yeterli testi içeren ana işlev olmalıdır.
+	Eğer yoksa egzersizi derecelendirmeyin.
+	Arayüz olmayan herhangi bir sınıf, geleneksel kanonik sınıf formunda değilse, bu alıştırmaya not vermeyin.
+
+Template function / Şablon işlevi:
+There is a templated function easyFind(T, int) that does what the subject requires.
+It has to use stl algorithms.
+If it does not (like manual search using iterators for example), count it as wrong.
+
+	>	Konunun gerektirdiğini yapan şablonlu bir easyFind(T, int) işlevi vardır.
+	STL algoritmalarını kullanmak zorundadır.
+	Olmazsa (örneğin yineleyicileri kullanan manuel arama gibi), yanlış olarak sayın.
+
 */
 int main(){
 
