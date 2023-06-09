@@ -9,6 +9,7 @@ Span::Span( unsigned int N ) : _n(N){
 }
 
 Span::Span( const Span &ref ){
+	std::cout << "Copy Constructor Called" << std::endl;
 	*this = ref;
 }
 
@@ -36,7 +37,21 @@ void Span::addNumber( unsigned int N ){
 	}
 	catch ( std::exception &e )
 	{
-		std::cerr << e.what() << "\n";
+		std::cerr << e.what() << std::endl;
+	}
+}
+
+void Span::addNumber( std::list<int>::const_iterator begin, std::list<int>::const_iterator end ){
+
+	try
+	{
+		if (std::distance(begin, end) > this->_n - this->getSize())
+			throw ( std::runtime_error(RED "Other list size is to low!" END ) );
+		this->_list.insert(this->_list.end(), begin, end);
+	}
+	catch ( std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
 	}
 }
 
@@ -45,7 +60,7 @@ int	Span::shortestSpan( void ){
 	try
 	{
 		if (this->_list.size() < 2)
-			throw ( std::out_of_range("List arguments is to low!") );
+			throw ( std::runtime_error(RED "List arguments is to low!" END) );
 		int min, diff = min = this->getMax() - this->getMin();
 		for ( std::list<int>::const_iterator i = this->getList()->begin(); i != this->getList()->end(); ++i )
 		{
@@ -61,7 +76,7 @@ int	Span::shortestSpan( void ){
 	}
 	catch ( std::exception &e )
 	{
-		std::cerr << e.what() << "\n";
+		std::cerr << e.what() << std::endl;
 	}
 	return (0);
 }
@@ -71,11 +86,11 @@ int Span::longestSpan( void ){
 	try
 	{
 		if (this->_list.size() < 2)
-			throw ( std::out_of_range("List arguments is to low!") );
+			throw ( std::runtime_error(RED "List arguments is to low!" END) );
 	}
 	catch ( std::exception &e )
 	{
-		std::cerr << e.what() << "\n";
+		std::cerr << e.what() << std::endl;;
 	}
 	return (this->getMax() - this->getMin());
 }
@@ -97,11 +112,11 @@ int	Span::getMin( void ){
 }
 
 const char* Span::OutOfBoundsException::what() const throw(){
-	return ( "Index is out of bounds!" );
+	return ( RED "Index is out of bounds!" END );
 }
 
 const char* Span::ArrayIsFull::what() const throw(){
-	return ( "Array is Full!" );
+	return ( RED "Array is Full!" END );
 }
 
 std::ostream &operator<<( std::ostream &os, const Span &obj ){
