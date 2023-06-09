@@ -12,7 +12,7 @@
 		Bu çok kötü.
 
 		Ama bunu neden kabul edelim? Özellikle eksik özellikleri oluşturmak için orijinal yığını kesme özgürlüğünü alabilirsek.
-		Bu adaletsizliği onarmak için std::stack kapsayıcısını(container) yinelenebilir yapmalısınız.
+		Bu adaletsizliği onarmak için std::stack kapsayıcısını(container) yinelenebilir(iterator) yapmalısınız.
 
 		Bir MutantStack sınıfı yazın.
 		Bir std::stack açısından uygulanacaktır. (implemented in terms of a std::stack)
@@ -49,7 +49,7 @@
 					std::cout << *it << std::endl;
 					++it;
 				}
-				std::stack<int s(mstack);
+				std::stack<int> s(mstack);
 				return (0);
 			}
 ---------------------------------------------------------------------------------------------------------------
@@ -57,6 +57,7 @@
 		İlk kez MutantStack'inizle çalıştırırsanız ve ikinci kez MutantStack'i örneğin bir std::list ile değiştirirseniz, iki çıktı aynı olmalıdır.
 		Elbette, başka bir kapsayıcıyı(container) test ederken, aşağıdaki kodu karşılık gelen üye işlevlerle güncelleyin (push(), push_back() haline gelebilir).
 Not:
+	Stack yapısında iteratorler olmadığından dolayı, bu yapıyı MutantStack class'ımıza kalıtım yaparak, bu sınıf ile artık stack ve iterator yapısını kullanabilmekteyiz.
 
 Eva Rules:
 As usual, there has to be the main function that contains enough tests to prove the program work as expected.
@@ -72,7 +73,7 @@ There is a MutantStack class that inherits from std::stack and offers all of its
 It has an iterator. Also, it is possible to do at least the operations shown in the subject's examples using iterators.
 
 	>	std::stack öğesinden miras alan ve tüm üye işlevlerini sunan bir MutantStack sınıfı vardır.
-	Bir yineleyiciye sahiptir. Ayrıca en azından konunun örneklerinde gösterilen işlemleri yineleyiciler kullanarak yapmak mümkündür.
+	Bir yineleyiciye(iterator) sahiptir. Ayrıca en azından konunun örneklerinde gösterilen işlemleri yineleyiciler kullanarak yapmak mümkündür.
 
 Better tests:
 There is a at least a main() function that has more tests than the ones from the subject.
@@ -80,7 +81,7 @@ There is a at least a main() function that has more tests than the ones from the
 	>	Konudaki testlerden daha fazla test içeren en azından bir main() işlevi vardır.
 
 */
-int main(){
+int main( void ){
 	MutantStack<int>	mstack;
 
 	mstack.push(5);
@@ -107,6 +108,6 @@ int main(){
 		std::cout << *it << std::endl;
 		++it;
 	}
-	std::stack<int s(mstack);
+	std::stack<int> s(mstack);
 	return (0);
 }
