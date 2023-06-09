@@ -43,11 +43,24 @@ void Span::addNumber( unsigned int N ){
 int	Span::shortestSpan( void ){
 	try
 	{
-		for ()
+		if (this->_list.size() < 2)
+			throw ( std::out_of_range("List arguments is to low!") );
+		int min, diff = (*std::max_element(this->_list.begin(), this->_list.end()) - *std::min_element(this->_list.begin(), this->_list.end()));
+		for ( std::list<int>::const_iterator i = this->getList()->begin(); i != this->getList()->end(); ++i )
+		{
+			if (std::next(i) != this->getList()->end())
+			{
+				diff = abs(*std::next(i) - *i);
+				std::cout << "next: " << *std::next(i) << " before: " << *i << "\n";
+			}
+			if (diff < min)
+				min = diff;
+		}
+		return (min);
 	}
 	catch ( std::exception &e )
 	{
-
+		std::cerr << e.what() << "\n";
 	}
 	return (0);
 }
