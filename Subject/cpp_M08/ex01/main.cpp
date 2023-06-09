@@ -82,21 +82,47 @@ There's a way to add numbers that's more practical than calling the addNumber() 
 	>	Sayıları eklemenin addNumber() işlevini tekrar tekrar çağırmaktan daha pratik bir yolu vardır.
 */
 int main( void ){
-	Span sp = Span(5);
 
-	sp.addNumber(6);
-	sp.addNumber(3);
-	sp.addNumber(17);
-	sp.addNumber(9);
-	sp.addNumber(11);
-	sp.addNumber(11);
-	sp.addNumber(11);
+	{
+		std::cout << RED "---------------- Subject default test ----------------" END << std::endl;
+
+		Span sp = Span(5);
+
+		sp.addNumber(3);
+		sp.addNumber(17);
+		sp.addNumber(6);
+		sp.addNumber(9);
+		sp.addNumber(11);
+
+		std::cout << RED"List: \n"END << sp << std::endl;
+		std::cout << "Max:		" << sp.getMax() << std::endl;
+		std::cout << "Min:		" << sp.getMin() << std::endl;
+		std::cout << "List Size:	" << sp.getSize() << std::endl;
+		std::cout << GREEN"Shortest Value:	" << sp.shortestSpan() << END << std::endl;
+		std::cout << GREEN"Longest Value:	" << sp.longestSpan() << END << std::endl;
+	}
+
+	{
+		std::cout << RED "---------------- 10k numbers test ----------------" END << std::endl;
+	
+		Span tab(20);
+		srand(time(NULL));
+		for (unsigned int i = 0; i < 20; i++)
+			tab.addNumber(rand());
+
+		std::cout << RED"List: \n"END << tab << std::endl;
+		std::cout << "Max:		" << tab.getMax() << std::endl;
+		std::cout << "Min:		" << tab.getMin() << std::endl;
+		std::cout << "List Size:	" << tab.getSize() << std::endl;
+		std::cout << GREEN"Shortest Value:	" << tab.shortestSpan() << END << std::endl;
+		std::cout << GREEN"Longest Value:	" << tab.longestSpan() << END << std::endl;
+	}
+
+	{
+		std::cout << RED "---------------- Way to add numbers that's more practical ----------------" END << std::endl;
 
 
-	std::cout << sp.shortestSpan() << std::endl;
-	std::cout << sp.longestSpan() << std::endl;
-
-	std::cout << sp << std::endl;
+	}
 
 	return (0);
 }

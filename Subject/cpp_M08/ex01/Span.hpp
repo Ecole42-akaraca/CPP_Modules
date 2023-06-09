@@ -5,6 +5,7 @@
 # include <algorithm>
 # include <vector>
 # include <list>
+# include "Color.hpp"
 
 class Span{
 private:
@@ -23,7 +24,10 @@ public:
 	int		shortestSpan( void );
 	int		longestSpan( void );
 
-	const std::list<int>* getList( void ) const;
+	const std::list<int>*	getList( void ) const;
+	int						getSize( void );
+	int						getMax( void );
+	int						getMin( void );
 
 	class OutOfBoundsException : public std::exception{
 		public:

@@ -41,20 +41,21 @@ void Span::addNumber( unsigned int N ){
 }
 
 int	Span::shortestSpan( void ){
+
 	try
 	{
 		if (this->_list.size() < 2)
 			throw ( std::out_of_range("List arguments is to low!") );
-		int min, diff = (*std::max_element(this->_list.begin(), this->_list.end()) - *std::min_element(this->_list.begin(), this->_list.end()));
+		int min, diff = min = this->getMax() - this->getMin();
 		for ( std::list<int>::const_iterator i = this->getList()->begin(); i != this->getList()->end(); ++i )
 		{
-			if (std::next(i) != this->getList()->end())
+			for ( std::list<int>::const_iterator l = this->getList()->begin(); l != this->getList()->end(); ++l )
 			{
-				diff = abs(*std::next(i) - *i);
-				std::cout << "next: " << *std::next(i) << " before: " << *i << "\n";
+				if (l != i)
+					diff = abs(*l - *i);
+				if (diff < min)
+					min = diff;
 			}
-			if (diff < min)
-				min = diff;
 		}
 		return (min);
 	}
@@ -66,6 +67,7 @@ int	Span::shortestSpan( void ){
 }
 
 int Span::longestSpan( void ){
+
 	try
 	{
 		if (this->_list.size() < 2)
@@ -75,11 +77,23 @@ int Span::longestSpan( void ){
 	{
 		std::cerr << e.what() << "\n";
 	}
-	return (*std::max_element(this->_list.begin(), this->_list.end()) - *std::min_element(this->_list.begin(), this->_list.end()));
+	return (this->getMax() - this->getMin());
 }
 
 const std::list<int>* Span::getList( void ) const{
 	return (&this->_list);
+}
+
+int	Span::getSize( void ){
+	return (this->_list.size());
+}
+
+int	Span::getMax( void ){
+	return (*std::max_element(this->_list.begin(), this->_list.end()));
+}
+
+int	Span::getMin( void ){
+	return (*std::min_element(this->_list.begin(), this->_list.end()));
 }
 
 const char* Span::OutOfBoundsException::what() const throw(){
@@ -92,13 +106,13 @@ const char* Span::ArrayIsFull::what() const throw(){
 
 std::ostream &operator<<( std::ostream &os, const Span &obj ){
 
-	os << "[ ";
+	os << BLUE "[ ";
 	for ( std::list<int>::const_iterator i = obj.getList()->begin(); i != obj.getList()->end(); ++i )
 	{
 		os << *i;
 		if (std::next(i) != obj.getList()->end())
-			os << " ";
+			os << ", ";
 	}
-	os << " ]";
+	os << " ]" END;
 	return (os);
 }
