@@ -5,6 +5,7 @@
 # include <algorithm>
 # include <vector>
 # include <list>
+# include <stack>
 # include "Color.hpp"
 
 template< typename T >
@@ -16,6 +17,32 @@ void easyfind( T &container, int value ){ // int value değeri olduğundan dolay
 		std::cout << RED "Value: " << value << " --> X Not Found!" END << std::endl;
 }
 
+template < typename T >
+void	printer( T& container ){
+
+	typename T::iterator it = container.begin();
+	typename T::iterator ite = container.end();
+
+	std::cout << BLUE "Array[ ";
+
+	if (it != ite)
+	{
+		while (it != ite){
+			std::cout << *it;
+			if (std::next(it) != ite)
+				std::cout << ", ";
+			++it;
+		}
+	}
+	else
+	{
+		std::cout << "EMPTY";
+	}
+	std::cout << " ]\n" END << std::endl;
+}
+
+/*
+//---------------------------------------------- Vector'e özel printer ------------------------------------------------------------------//
 template< typename T >
 void printer( const std::vector<T>& container ){
 	std::cout << BLUE "Array[ ";
@@ -34,6 +61,7 @@ void printer( const std::vector<T>& container ){
 	}
 	std::cout << " ]\n" END << std::endl;
 }
+*/
 
 //----------------------------------------------std::vector<std::string> için çıktı alma methodu------------------------------------------------------------------//
 // void printer( const std::vector<std::string>& container){

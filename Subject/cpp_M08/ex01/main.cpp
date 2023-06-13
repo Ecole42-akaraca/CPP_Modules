@@ -19,7 +19,7 @@
 
 		Elbette kendi testlerinizi yazacaksınız ve bunlar aşağıdaki testlerden çok daha kapsamlı olacak.
 		Span'ınızı en az 100000 sayı ile test edin. Daha fazlası daha da iyi olacaktır.
-	
+
 		Main.cpp:
 ---------------------------------------------------------------------------------------------------------------
 			int main( void ){

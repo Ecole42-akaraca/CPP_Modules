@@ -8,7 +8,7 @@
 		easyfind adlı bir şablon fonksiyon yazın ve bir T türü kabul edin.
 		İki parametre alır.
 		İlk parametresi T türünde ve ikinci parametresi tamsayıdır.
-		
+
 		T'nin bir tamsayı konteyneri olduğu varsayımıyla, bu işlev, ilk parametredeki ikinci parametrenin ilk oluşumunu bulmalıdır.
 		
 		Eğer bir oluşum bulunamazsa, istisna fırlatabilirsiniz veya kendi belirleyeceğiniz bir hata değeri döndürebilirsiniz.
@@ -37,6 +37,30 @@ Not:
 		Bu algoritmalar, sıklıkla sıralama, arama, değiştirme ve özetleme işlemlerini gerçekleştirmek için kullanılır.
 		Algoritmalar, genellikle STL konteynırları üzerindeki verileri işlemek için kullanılan iteratorlarla birlikte kullanılır.
 
+	Containerler nelerdir?
+
+		1. Sequence Containers (Sıralı Konteynerler):
+			std::vector: Dinamik boyutlu, ardışık bellek bloğunda depolanan bir dizi.
+			std::list: Çift yönlü bağlı liste.
+			std::deque: Çift uçlu sıralı bir dizi.
+
+		2. Associative Containers (İlişkili Konteynerler):
+			std::set: Sıralanmış benzersiz eleman kümesi.
+			std::map: Anahtar-değer çiftlerinin sıralı bir koleksiyonu.
+			std::multiset: Sıralanmış eleman kümesi (tekrarlayan elemanlara izin verir).
+			std::multimap: Anahtar-değer çiftlerinin sıralı bir koleksiyonu (tekrarlayan anahtarlara izin verir).
+
+		3. Unordered Containers (Sırasız Konteynerler):
+			std::unordered_set: Sırasız benzersiz eleman kümesi.
+			std::unordered_map: Anahtar-değer çiftlerinin sırasız bir koleksiyonu.
+			std::unordered_multiset: Sırasız eleman kümesi (tekrarlayan elemanlara izin verir).
+			std::unordered_multimap: Anahtar-değer çiftlerinin sırasız bir koleksiyonu (tekrarlayan anahtarlara izin verir).
+
+		4. Container Adaptors (Konteyner Dönüştürücüleri):
+			std::stack: LIFO (Son giren, ilk çıkar) veri yapısını uygular.
+			std::queue: FIFO (İlk giren, ilk çıkar) veri yapısını uygular.
+			std::priority_queue: Öncelikli kuyruk veri yapısını uygular.
+
 Eva Rules:
 As usual, there has to be the main function that contains enough tests to prove the program work as expected.
 If there isn't, do not grade tihs exercise.
@@ -58,32 +82,76 @@ If it does not (like manual search using iterators for example), count it as wro
 */
 int main(){
 
-	std::vector<int> intVec;
+	{
+		std::cout << RED "---------------- for vector example ----------------" END << std::endl;
 
-	intVec.push_back(10);
-	intVec.push_back(20);
-	intVec.push_back(30);
+		std::vector<int> intVec;
 
-	easyfind(intVec, 30);
-	easyfind(intVec, 50);
-	printer(intVec);
+		intVec.push_back(10);
+		intVec.push_back(20);
+		intVec.push_back(30);
 
-	std::vector<double> doubleVec;
+		easyfind(intVec, 30);
+		easyfind(intVec, 50);
+		printer(intVec);
 
-	doubleVec.push_back(5);
-	doubleVec.push_back(7);
-	doubleVec.push_back(8.42);
+		std::vector<double> doubleVec;
 
-	easyfind(doubleVec, 7);
-	easyfind(doubleVec, 8);
-	printer(doubleVec);
+		doubleVec.push_back(5);
+		doubleVec.push_back(7);
+		doubleVec.push_back(8.42);
 
-//----------------------------------------------vector<std::string> için örnek------------------------------------------------------------------//
-	// std::vector<std::string> stringVec;
-	// stringVec.push_back("Jack");
-	// stringVec.push_back("Carl");
-	// stringVec.push_back("Alice");
-	// stringVec.push_back("Emanuel");
-	// printer(stringVec);
+		easyfind(doubleVec, 7);
+		easyfind(doubleVec, 8);
+		printer(doubleVec);
+
+		std::vector<std::string> stringVec;
+		stringVec.push_back("Jack");
+		stringVec.push_back("Carl");
+		stringVec.push_back("Alice");
+		stringVec.push_back("Emanuel");
+		printer(stringVec);
+	}
+
+	{
+		std::cout << RED "---------------- for list example ----------------" END << std::endl;
+
+		std::list<int> intList;
+
+		intList.push_back(3);
+		intList.push_back(6);
+		intList.push_back(9);
+
+		easyfind(intList, 6);
+		printer(intList);
+	}
+
+	{
+		std::cout << RED "---------------- for deque example ----------------" END << std::endl;
+		
+		std::deque<int> intDeque;
+
+		intDeque.push_front(4);
+		intDeque.push_front(8);
+		intDeque.push_front(12);
+
+		easyfind(intDeque, 8);
+		printer(intDeque);
+	}
+
+/*
+// !!! std::stack have not a itterators so easyfind doesnt not work for stack contaniers !!!
+	{
+		std::cout << RED "---------------- for stack example (return error) ----------------" END << std::endl;
+		
+		std::stack<int> intStack;
+
+		intStack.push(10);
+		intStack.push(20);
+		intStack.push(30);
+
+		easyfind(intStack, 20);
+	}
+*/
 	return (0);
 }
