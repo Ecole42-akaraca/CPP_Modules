@@ -105,12 +105,12 @@ int main( void ){
 	{
 		std::cout << RED "---------------- 10k numbers test ----------------" END << std::endl;
 	
-		Span tab(20);
+		Span tab(10000);
 		srand(time(NULL));
-		for (unsigned int i = 0; i < 20; i++)
+		for (unsigned int i = 0; i < 10000; i++)
 			tab.addNumber(rand());
 
-		std::cout << RED "List: \n" END << tab << std::endl;
+		std::cout << RED "List: \n" END << "-> list is too big so i can't print <-" << std::endl;//tab << std::endl;
 		std::cout << "Max:		" << tab.getMax() << std::endl;
 		std::cout << "Min:		" << tab.getMin() << std::endl;
 		std::cout << "List Size:	" << tab.getSize() << std::endl;
@@ -120,15 +120,15 @@ int main( void ){
 
 	{
 		std::cout << RED "---------------- Way to add numbers that's more practical ----------------" END << std::endl;
-		Span tab(31);
-		std::list<int> list(30);
+		Span tab(30001);
+		std::list<int> list(30000);
 
 		std::srand(time(NULL));
 		std::generate(list.begin(), list.end(), std::rand);
 		tab.addNumber(list.begin(), list.end());
 		tab.addNumber(99);
 
-		std::cout << RED "List: \n" END << tab << std::endl;
+		std::cout << RED "List: \n" END << "-> list is too big so i can't print <-" << std::endl;//tab << std::endl;
 		std::cout << "Max:		" << tab.getMax() << std::endl;
 		std::cout << "Min:		" << tab.getMin() << std::endl;
 		std::cout << "List Size:	" << tab.getSize() << std::endl;
