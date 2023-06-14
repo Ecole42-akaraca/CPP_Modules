@@ -2,7 +2,7 @@
 
 /*
 	---> C++ STL / Standard Template Library <---
-	--->  Bitcoin Exchange / Bitcoin borsa <---
+	--->  Bitcoin Exchange / Bitcoin borsası <---
 	Subject Çeviri:
 		Belirli bir tarihte belirli miktarda bitcoin değerini veren bir program oluşturmalısınız.
 
@@ -82,16 +82,18 @@ int main( int argc, char **argv ){
 
 	if (argc != 2)
 	{
-		std::cout << RED "Error, not enought inputs!" END << std::endl;
+		std::cout << RED "###	Error: not enought inputs!	###" END << std::endl;
 		return (1);
 	}
 	if (!Bitcoin::checkFile(argv[1]) || !Bitcoin::checkFile(Bitcoin::getDataName()))
 		return (1);
-	Bitcoin::setFileName(argv[1]);
+	Bitcoin::setInputName(argv[1]);
 	Bitcoin::setContainer();
-	Bitcoin::printContainer();
-	std::cout << Bitcoin::getFileName() << std::endl;
 
+	
+	Bitcoin::printContainer();
+	std::cout << Bitcoin::getInputName() << std::endl;
+	Bitcoin::printInputExchange();
 /*
 	std::map<std::string, double> test;
 	test.insert(std::make_pair("ahmet", 42));
