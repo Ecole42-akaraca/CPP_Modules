@@ -78,6 +78,7 @@ Not:
 	std::pair<std::string, double> firstElement =  *test.begin();
 	std::cout << firstElement.first << " - " << firstElement.second << std::endl;
 
+	// if (Bitcoin::_arr.find(date) != Bitcoin::_arr.end())
 
 ->??Std::map visualization
 ->??Red tree
@@ -88,17 +89,19 @@ Eva Rules:
 */
 int main( int argc, char **argv ){
 
-	if (argc != 2)
+	try
 	{
-		std::cout << RED "###	Error: not enought inputs!	###" END << std::endl;
-		return (1);
+		Bitcoin::checkArg(argc, argv);
+		Bitcoin::setInputName(argv[1]);
+		Bitcoin::setContainer();
+		Bitcoin::printInputExchange();
 	}
-	if (!Bitcoin::checkFile(argv[1]) || !Bitcoin::checkFile(Bitcoin::getDataName()))
-		return (1);
-	Bitcoin::setInputName(argv[1]);
-	Bitcoin::setContainer();
-	Bitcoin::printInputExchange();
+	catch (std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	return (0);
 
-	// Bitcoin::printContainer();
+	//Bitcoin::printContainer();
 	// std::cout << Bitcoin::getInputName() << std::endl;
 }
