@@ -37,10 +37,17 @@ public:
 
 	static void			printInputExchange( void );
 
-	class NotEnoughtInput : public std::exception{
+	class NotEnoughtInputs : public std::exception{
 		public:
 			virtual const char *what(void) const throw(){
 				return ( RED "###	Error: not enought inputs!	###" END );
+			}
+	};
+
+	class TooManyInputs : public std::exception{
+		public:
+			virtual const char *what(void) const throw(){
+				return ( RED "###	Error: too many inputs!		###" END );
 			}
 	};
 

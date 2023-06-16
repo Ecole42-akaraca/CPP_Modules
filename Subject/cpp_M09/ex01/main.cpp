@@ -2,7 +2,7 @@
 
 /*
 	---> C++ STL / Standard Template Library <---
-	--->  Reverse Polish Notation / Ters Polish Gösterimi <---
+	--->  Reverse Polish Notation / Ters Lehçe Notasyonu / RPN <---
 	Subject Çeviri:
 		Bu kısıtlamalara sahip bir program oluşturmalısınız:
 			-> Programın adı RPN'dir.
@@ -31,10 +31,46 @@
 
 
 Not:
+	Polish mathematical expression (Polonya'lilarin eskiden kullandigi bir hesaplama yöntemi)
+	std::stack kullandim cunku girdigimiz degerler sirasiyla hesaplaniyor ayni ust uste koyulmus tabaklar gibi(stack)
+
+	./RPN "8 9 * 9 - 9 - 9 - 4 - 1 +"
+	Burada bizden 8 ile 9'u carp(*) sonucu hafizada tut.
+	72 ile 9'u cikar(-) sonucu hafizada tut.
+	.
+	.
+	.
+
+	Parantezleri veya ondalık sayıları yönetmenize gerek yoktur.
+	./RPN "(1 + 1)"
+	Error
+
+	bu ( falan \ [ gibi seyleri bosver ugrasma diyor
+	en son da iste sonucu yazdir diyor.
+
+--> "3 4 5 + 2 *" RPN ifadesini adım adım değerlendirelim:
+	İlk olarak, 3'ü yığına koyarız: [3]
+	Sonra, 4'ü yığına koyarız: [3, 4]
+	Daha sonra, 5'i yığına koyarız: [3, 4, 5]
+	"+" operatörüyle karşılaştığımızda, en üstteki iki elemanı alırız (4 ve 5) ve toplarız: [3, 9]
+	Şimdi, 2'yi yığına koyarız: [3, 9, 2]
+	"*" operatörüyle karşılaştığımızda, en üstteki iki elemanı alırız (9 ve 2) ve çarparız: [3, 18]
+	Sonuç olarak, "3 4 5 + 2 *" ifadesi değerlendirildiğinde, yığında sadece bir eleman olan 18 kalır. Yani, sonuç 18'dir.
+
 
 Eva Rules:
 
 */
-int main(){
+int main(int argc, char **argv){
 
+	try
+	{
+		RPN::checkArg(argc, argv);
+		RPN::printRPN();
+	}
+	catch ( std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
+	return (0);
 }

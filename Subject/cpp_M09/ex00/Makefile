@@ -18,4 +18,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+valgrind:
+	valgrind --leak-check=full ./btc input.txt
+
+.PHONY: all clean fclean re valgrind

@@ -2,7 +2,7 @@
 
 std::string						Bitcoin::_input = "";
 std::string						Bitcoin::_inputFirstLine = "date | value";
-std::string						Bitcoin::_data = "test_data.csv";
+std::string						Bitcoin::_data = "data.csv";
 std::string						Bitcoin::_dataFormat = ".csv";
 std::string						Bitcoin::_dataFirstLine = "date,exchange_rate";
 std::string						Bitcoin::_delimiterPosData = ",";
@@ -11,8 +11,10 @@ std::map<std::string, double>	Bitcoin::_arr;
 
 void		Bitcoin::checkArg( int argc, char **argv ){
 
-	if (argc != 2)
-		throw ( NotEnoughtInput() );
+	if (argc < 2)
+		throw ( NotEnoughtInputs() );
+	if (argc > 2)
+		throw ( TooManyInputs() );
 	Bitcoin::checkFile(argv[1]);
 	Bitcoin::checkFile(Bitcoin::getDataName());
 }
