@@ -2,6 +2,7 @@
 
 std::string						Bitcoin::_input = "";
 std::string						Bitcoin::_data = "test_data.csv";
+std::string						Bitcoin::_dataFormat = ".csv";
 std::string						Bitcoin::_delimiterPosData = ",";
 std::string						Bitcoin::_delimiterPosInput = "|";
 std::map<std::string, double>	Bitcoin::_arr;
@@ -9,7 +10,7 @@ std::map<std::string, double>	Bitcoin::_arr;
 int			Bitcoin::checkFile( std::string file ){
 	std::ifstream	read;
 
-	read.open(file);
+	read.open(file.c_str());
 	if (!read.is_open())
 	{
 		std::cout << RED "###	Error: " << file << " file doesn't not exist	###" END << std::endl;
@@ -23,12 +24,17 @@ int			Bitcoin::checkFile( std::string file ){
 
 void		Bitcoin::setInputName( std::string input ) { _input = input; }
 std::string	Bitcoin::getInputName( void ) { return (_input); }
-std::string	Bitcoin::getDataName( void ) { return (_data); }
+std::string	Bitcoin::getDataName( void ) {
+
+	if (_data.substr(_data.size() - _dataFormat.size()).compare(_dataFormat) == 0) // data dosyasının formatı karşılaştırılıyor.
+		return (_data);
+	return ("");
+}
 std::string Bitcoin::getDelimiterPosData( void ) { return (_delimiterPosData); }
 std::string	Bitcoin::getDelimiterPosInput( void ) { return (_delimiterPosInput); }
 
 void		Bitcoin::setContainer( void ){
-	std::ifstream	file(Bitcoin::getDataName());
+	std::ifstream	file(Bitcoin::getDataName().c_str());
 	std::string		line;
 
 	getline(file, line);
@@ -37,21 +43,21 @@ void		Bitcoin::setContainer( void ){
 		std::cout << RED "###	Error: The first line of the data file should contain 'data,exchange rate'	###" END << std::endl;
 	else
 	{
-		while (getline(file, line))
-		{
-			std::string	date;
-			double		value;
+	while (getline(file, line))
+	{
+		std::string	date;
+		double		value;
 
-			delimiterPos = line.find(Bitcoin::getDelimiterPosData()); // hangi harf/kelime grubundan itibaren ayıracak belirliyoruz.
-			if (delimiterPos != std::string::npos)
-			{
+		delimiterPos = line.find(Bitcoin::getDelimiterPosData()); // hangi harf/kelime grubundan itibaren ayıracak belirliyoruz.
+		if (delimiterPos != std::string::npos)
+		{
 				date = line.substr(0, delimiterPos);
+				date.erase(std::remove(date.begin(), date.end(), ' '), date.end());
 				std::istringstream iss(line.substr(delimiterPos + 1)); // double yerine string bir girdi varsa atlamak için kullanıyorum.
 				if (date.empty() || line[0] == '#') // date'in boş olmasını istemdiğim için ekledim.
 					continue;
 				if (iss >> value)
 				{
-					value = std::stod(line.substr(delimiterPos + 1));
 					_arr[date] = value; // red tree yapısına göre atandığı için date değerinin karşılığını vermem yeterli, kendi içinde sıralıyor.
 				}
 			}
@@ -68,7 +74,7 @@ void		Bitcoin::printContainer( void ){
 }
 
 void		Bitcoin::printInputExchange( void ){
-	std::ifstream	file(Bitcoin::getInputName());
+	std::ifstream	file(Bitcoin::getInputName().c_str());
 	std::string		line;
 
 	getline(file, line);
@@ -77,15 +83,15 @@ void		Bitcoin::printInputExchange( void ){
 		std::cout << RED "###	Error: The first line of the input file should contain 'date | value'	###" END << std::endl;
 	else
 	{
-		std::map<std::string, double>::const_iterator it;
 		while (getline(file, line))
 		{
 			std::string	date;
 			double		value;
 
-
 			delimiterPos = line.find(Bitcoin::getDelimiterPosInput());
 			date = line.substr(0, delimiterPos);
+			if (date.empty() || line[0] == '#')
+				continue;
 
 			int year, month, day;
 			char dash1, dash2;
@@ -99,19 +105,24 @@ void		Bitcoin::printInputExchange( void ){
 			else if (delimiterPos != std::string::npos)
 			{
 				date = line.substr(0, delimiterPos);
+				date.erase(std::remove(date.begin(), date.end(), ' '), date.end());
 				std::istringstream iss(line.substr(delimiterPos + 1));
-				if (date.empty() || line[0] == '#')
-					continue;
 				if (iss >> value)
 				{
 					if (value < 0)
 						std::cout << RED "Error: not a positive number." END << std::endl;
-					else if (value > INT_MAX)
+					else if (value > 1000)//INT_MAX)
 						std::cout << RED "Error: too large a number." END << std::endl;
 					else
 					{
-						// value = std::stod(line.substr(delimiterPos + 1));
-						std::cout << date << "=> " << value << " = " << std::endl;
+						typename std::map<std::string, double>::iterator upperBoundIter = Bitcoin::_arr.upper_bound(date);
+						if (upperBoundIter != Bitcoin::_arr.end())
+						{
+							--upperBoundIter;
+							std::cout << date << " => " << value << " = " << value*(upperBoundIter->second) << std::endl;
+						}
+
+						// if (Bitcoin::_arr.find(date) != Bitcoin::_arr.end())
 					}
 				}
 			}

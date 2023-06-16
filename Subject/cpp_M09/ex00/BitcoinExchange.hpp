@@ -2,11 +2,12 @@
  #define BITCOINEXCHANGE_HPP
 
 # include <iostream>
+# include <map>			// std::map
+# include <fstream>		// std::ifstream
+# include <sstream>		// std::istringstream
+# include <climits>		// INT_MAX
+// # include <sys/stat.h>
 # include <algorithm>
-# include <map>
-# include <fstream>
-# include <sstream>
-# include <sys/stat.h>
 # include "Color.hpp"
 
 class Bitcoin{
@@ -14,6 +15,7 @@ class Bitcoin{
 private:
 	static std::string						_input;
 	static std::string						_data;
+	static std::string						_dataFormat;
 	static std::string						_delimiterPosData;
 	static std::string						_delimiterPosInput;
 	static std::map<std::string, double>	_arr;

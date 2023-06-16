@@ -71,6 +71,14 @@ Not:
 	Bu durumlar haricinde, tarihin yanlış girilmesi(absürt bir tarih) veya verilen coin miktarının sınırları dışında verilmesi durumunda istisna fırlatılır.
 
 
+	std::map<std::string, double> test;
+	test.insert(std::make_pair("ahmet", 42));
+	test["ahmet"] = 33;
+
+	std::pair<std::string, double> firstElement =  *test.begin();
+	std::cout << firstElement.first << " - " << firstElement.second << std::endl;
+
+
 ->??Std::map visualization
 ->??Red tree
 ->??std::map container'ı, elemanları doğal bir sıralama düzenine göre saklar. Bu sıralama, anahtarların std::less varsayılan karşılaştırma fonksiyonunu kullanarak gerçekleştirilir.
@@ -89,16 +97,8 @@ int main( int argc, char **argv ){
 		return (1);
 	Bitcoin::setInputName(argv[1]);
 	Bitcoin::setContainer();
-
-	
-	Bitcoin::printContainer();
-	std::cout << Bitcoin::getInputName() << std::endl;
 	Bitcoin::printInputExchange();
-/*
-	std::map<std::string, double> test;
-	test.insert(std::make_pair("ahmet", 42));
 
-	std::pair<std::string, double> firstElement =  *test.begin();
-	std::cout << firstElement.first << " - " << firstElement.second << std::endl;
-*/
+	// Bitcoin::printContainer();
+	// std::cout << Bitcoin::getInputName() << std::endl;
 }
