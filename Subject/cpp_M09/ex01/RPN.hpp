@@ -2,6 +2,7 @@
  #define RPN_HPP
 
 # include <iostream>
+# include <algorithm>
 # include <stack>
 # include <sstream>
 # include <string.h>
@@ -10,15 +11,15 @@
 class RPN{
 
 private:
-	static std::string				_input;
-	static std::string				_allowedChars;
-	static std::stack<std::string>	_arr;
+	static std::string					_input;
+	static std::string					_allowedChars;
+	static std::stack<int>				_arr;
 
 public:
 	static void						setInput( std::string );
 	static void						setContainer( void );
 	static std::string				getInput( void );
-	static std::stack<std::string>	&getContainer( void );
+	static std::stack<int>			&getContainer( void );
 	static void						unwantedChars( void );
 	static void						checkArg( int, char ** );
 	static int						stringToInt( std::string );
