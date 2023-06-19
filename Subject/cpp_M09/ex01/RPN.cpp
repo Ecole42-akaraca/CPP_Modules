@@ -53,7 +53,6 @@ void						RPN::printRPN( void ){
 
 			int num2 = RPN::getContainer().top(); RPN::getContainer().pop();
 			int num1 = RPN::getContainer().top(); RPN::getContainer().pop();
-			std::cout << "num1: " << num1 << " num2: " << num2 << std::endl;
 
 			if (token == "+") {
 				RPN::getContainer().push(num1 + num2);

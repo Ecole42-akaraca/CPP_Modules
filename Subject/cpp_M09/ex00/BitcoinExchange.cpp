@@ -135,7 +135,7 @@ void		Bitcoin::printInputExchange( void ){
 						throw ( NotPositiveNumber() );
 					if (value > 1000)//INT_MAX)
 						throw ( TooLargeNumber() );
-					typename std::map<std::string, double>::iterator upperBoundIter = Bitcoin::_arr.upper_bound(date);
+					std::map<std::string, double>::iterator upperBoundIter = Bitcoin::_arr.upper_bound(date);
 					if (upperBoundIter != Bitcoin::_arr.end())
 					{
 						--upperBoundIter;
