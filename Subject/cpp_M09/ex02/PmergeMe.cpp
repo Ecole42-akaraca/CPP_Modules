@@ -86,5 +86,12 @@ void				PmergeMe::setContainers( int argc, char **argv ){
 }
 
 void			PmergeMe::sortListContainer( void ){
-	
+
+
+}
+
+void			PmergeMe::sortVectorContainer( void ){
+
+
+
 }

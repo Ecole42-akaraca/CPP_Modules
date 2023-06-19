@@ -9,7 +9,7 @@
 			-> Programınız pozitif bir tamsayı dizisini bağımsız değişken olarak kullanabilmelidir.
 			-> Programınız, pozitif tamsayı dizisini sıralamak için "birleştirme-ekleme(merge-insert)" sıralama algoritması kullanmalıdır.
 			-> Programın yürütülmesi sırasında bir hata oluşursa, standart çıktıda bir hata mesajı görüntülenmelidir.
-			
+
 		!!! Bu alıştırmayı doğrulamak için kodunuzda en az iki farklı kap(container) kullanmalısınız.
 		!!! Programınız en az 3000 farklı tamsayı işleyebilmelidir.
 
@@ -55,6 +55,8 @@ Not:
 
 	Çalıştırmak için komut satırına: 'make random INPUT=3000'
 
+	https://www.geeksforgeeks.org/merge-sort-vs-insertion-sort/
+
 Eva Rules:
 
 */
@@ -67,6 +69,7 @@ int main(int argc, char **argv){
 		PmergeMe::checkArg(argc, argv);
 		PmergeMe::setContainers(argc, argv);
 		PmergeMe::sortListContainer();
+		PmergeMe::sortVectorContainer();
 	}
 	catch ( std::exception& e)
 	{
