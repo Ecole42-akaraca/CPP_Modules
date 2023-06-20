@@ -60,7 +60,15 @@ void				PmergeMe::setContainers( int argc, char **argv ){
 	}
 }
 
-bool		PmergeMe::isListSorted(std::list<int>& list){
+double				PmergeMe::measureTime(clock_t start, clock_t end){
+	double duration = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+	double microseconds = duration * 1000000;
+	return microseconds;
+}
+
+/* ------------------------------------------------ List Methods ------------------------------------------------ */
+
+bool				PmergeMe::isListSorted(std::list<int>& list){
 	if (list.empty() || list.size() == 1)
 		return (true);
 	
@@ -78,7 +86,7 @@ bool		PmergeMe::isListSorted(std::list<int>& list){
 	return (true);
 }
 
-void		PmergeMe::printerList(std::string line){
+void				PmergeMe::printerList(std::string line){
 	int l = 0;
 
 	std::cout << line;
@@ -95,38 +103,12 @@ void		PmergeMe::printerList(std::string line){
 	}
 	std::cout << std::endl;
 }
-/*
-bool		PmergeMe::isVectorSorted(std::vector<int>& vector){
-	if (vector.empty() || vector.size() == 1)
-		return (true);
 
-    for (std::vector<int>::size_type i = 1; i < vector.size(); ++i) {
-        if (vector[i] < vector[i-1]) {
-            return false;
-        }
-    }
-	return (true);
+std::list<int>::iterator PmergeMe::ListGetPrev(std::list<int>::iterator it){
+	return --it;
 }
 
-void		PmergeMe::printerVector(std::string line){
-	int l = 0;
-
-	std::cout << line;
-	for (std::vector<int>::iterator i = _vector.begin(); i != _vector.end(); ++i, l++)
-	{
-		if (_vector.size() > 10 && l == 5)
-		{
-			std::cout << "[...]";
-			break;
-		}
-		std::cout << *i;
-		if (std::next(i) != _vector.end())
-			std::cout << " ";
-	}
-	std::cout << std::endl;
-}*/
-
-void		PmergeMe::mergeSorting(std::list<int>& list, std::list<int>& left, std::list<int>& right ){
+void				PmergeMe::ListMergeSorting(std::list<int>& list, std::list<int>& left, std::list<int>& right ){
 
 	std::list<int>::iterator leftIt = left.begin();
 	std::list<int>::iterator rightIt = right.begin();
@@ -149,49 +131,42 @@ void		PmergeMe::mergeSorting(std::list<int>& list, std::list<int>& left, std::li
 	list.insert(list.end(), rightIt, right.end());
 }
 
-std::list<int>::iterator getPrev(std::list<int>::iterator it)
-{
-    return --it;
-}
-
-void		insertionSort( std::list<int>::iterator begin, std::list<int>::iterator end )
+void				PmergeMe::ListInsertSorting( std::list<int>::iterator begin, std::list<int>::iterator end )
 {
 /*
 	std::list<int>::iterator	it1, it2;
 
 	for (it1 = begin; it1 != end; ++it1)
 	{
-		// int temp = *it1;
 		std::list<int>::value_type	temp = *it1;
 		it2 = it1;
 		std::cout << *it2 << " - " << *(getPrev(it2)) << std::endl;
 		while (it2 != begin && *(getPrev(it2)) > temp)
 		{
 			*it2 = *(getPrev(it2));
-			std::advance(it2, -1);
+			std::advance(it2, -1); // Bir adım geriye taşı
 		}
 		*it2 = temp;
 	}*/
 
-    for (std::list<int>::iterator it1 = begin; it1 != end; ++it1)
-    {
-        std::list<int>::value_type temp = *it1;
-        std::list<int>::iterator it2 = it1;
-        while (it2 != begin && *getPrev(it2)  > temp)
-        {
-            *it2 = *getPrev(it2);
-            --it2;
-        }
-        *it2 = temp;
-    }
+	for (std::list<int>::iterator it1 = begin; it1 != end; ++it1)
+	{
+		std::list<int>::value_type temp = *it1;
+		std::list<int>::iterator it2 = it1;
+		while (it2 != begin && *ListGetPrev(it2)  > temp)
+		{
+			*it2 = *ListGetPrev(it2);
+			--it2;
+		}
+		*it2 = temp;
+	}
 }
 
+void				PmergeMe::ListMergeInsertSorting( std::list<int>& list ){
 
-void		PmergeMe::mergeInsertSorting( std::list<int>& list ){
-
-	if (list.size() <= 10)
+	if (list.size() <= 100)
 	{
-		insertionSort(list.begin(), list.end());
+		ListInsertSorting(list.begin(), list.end());
 	}
 	else
 	{
@@ -207,11 +182,11 @@ void		PmergeMe::mergeInsertSorting( std::list<int>& list ){
 			right.push_back(*it);
 		}
 
-		mergeInsertSorting(left);
-		mergeInsertSorting(right);
+		ListMergeInsertSorting(left);
+		ListMergeInsertSorting(right);
 
 		list.clear();
-		mergeSorting(list, left, right);
+		ListMergeSorting(list, left, right);
 	}
 }
 
@@ -225,27 +200,131 @@ void		PmergeMe::mergeInsertSorting( std::list<int>& list ){
 		Belirli bir sayı üstünü merge sorting ile, belirli bir sayının altını ise insert sorting ile yapacağız.
 
 */
-void			PmergeMe::sortListContainer( void ){
+void				PmergeMe::sortListContainer( void ){
 
 	PmergeMe::printerList("Before	(_list):	");
 	clock_t start = clock();
-	mergeInsertSorting(_list);
+	ListMergeInsertSorting(_list);
 	clock_t end = clock();
 	PmergeMe::printerList("After	(_list):	");
 	std::cout << "Time to process a range of " << _list.size() << " elements with std::list<int> : ";
 	std::cout << PmergeMe::measureTime(start, end) << " us" << std::endl;
-	std::cout << "List is " << GREEN << (PmergeMe::isListSorted(_list) ? "sorted" : "not sorted") << END << std::endl;
+	std::cout << "List is " << (PmergeMe::isListSorted(_list) ? GREEN "sorted" : RED "not sorted") << END << std::endl;
 }
 
-// void			PmergeMe::sortVectorContainer( void ){
+/* ------------------------------------------------ Vector Methods ------------------------------------------------ */
 
-// 	PmergeMe::printerVector("\nBefore	(_vector):	");
-// 	PmergeMe::printerVector("After	(_vector):	");
-// 	std::cout << "Vector is " << GREEN << (PmergeMe::isVectorSorted(_vector) ? "sorted" : "not sorted") << END << std::endl;
-// }
+bool				PmergeMe::isVectorSorted(std::vector<int>& vector){
+	if (vector.empty() || vector.size() == 1)
+		return (true);
 
-double		PmergeMe::measureTime(clock_t start, clock_t end){
-	double duration = static_cast<double>(end - start) / CLOCKS_PER_SEC;
-	double microseconds = duration * 1000000;
-	return microseconds;
+	for (std::vector<int>::size_type i = 1; i < vector.size(); ++i) {
+		if (vector[i] < vector[i-1]) {
+			return false;
+		}
+	}
+	return (true);
+}
+
+void				PmergeMe::printerVector(std::string line){
+	int l = 0;
+
+	std::cout << line;
+	for (std::vector<int>::iterator i = _vector.begin(); i != _vector.end(); ++i, l++)
+	{
+		if (_vector.size() > 10 && l == 5)
+		{
+			std::cout << "[...]";
+			break;
+		}
+		std::cout << *i;
+		if (std::next(i) != _vector.end())
+			std::cout << " ";
+	}
+	std::cout << std::endl;
+}
+
+void				PmergeMe::VectorInsertSorting( std::vector<int>& vector, int left, int right ){
+
+    for (int i = left + 1; i <= right; i++) {
+        int key = vector[i];
+        int j = i - 1;
+
+        while (j >= left && vector[j] > key) {
+            vector[j + 1] = vector[j];
+            j--;
+        }
+
+        vector[j + 1] = key;
+    }
+}
+
+void				PmergeMe::VectorMergeSorting( std::vector<int>& vector, int left, int middle, int right ){
+
+    int n1 = middle - left + 1;
+    int n2 = right - middle;
+
+    std::vector<int> L(n1);
+    std::vector<int> R(n2);
+
+    for (int i = 0; i < n1; i++)
+        L[i] = vector[left + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = vector[middle + 1 + j];
+
+    int i = 0;
+    int j = 0;
+    int k = left;
+
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            vector[k] = L[i];
+            i++;
+        } else {
+            vector[k] = R[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        vector[k] = L[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        vector[k] = R[j];
+        j++;
+        k++;
+    }
+}
+
+void				PmergeMe::VectorMergeInsertSorting( std::vector<int>& vector, int left, int right ){
+
+	if (right - left <= 100)
+	{
+		VectorInsertSorting(vector, left, right);
+	}
+	else
+	{
+		int middle = left + (right - left) / 2;
+
+		VectorMergeInsertSorting(vector, left, middle);
+		VectorMergeInsertSorting(vector, middle + 1, right);
+
+		VectorMergeSorting(vector, left, middle, right);
+	}
+}
+
+void				PmergeMe::sortVectorContainer( void ){
+
+	PmergeMe::printerVector("\nBefore	(_vector):	");
+	clock_t start = clock();
+	VectorMergeInsertSorting(_vector, 0, _vector.size() - 1);
+	clock_t end = clock();
+	PmergeMe::printerVector("After	(_vector):	");
+	std::cout << "Time to process a range of " << _vector.size() << " elements with std::vector<int> : ";
+	std::cout << PmergeMe::measureTime(start, end) << " us" << std::endl;
+	std::cout << "Vector is " << (PmergeMe::isVectorSorted(_vector) ? GREEN "sorted" : RED "not sorted") << END << std::endl;
 }
