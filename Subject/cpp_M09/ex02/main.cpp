@@ -69,7 +69,7 @@ int main(int argc, char **argv){
 		PmergeMe::checkArg(argc, argv);
 		PmergeMe::setContainers(argc, argv);
 		PmergeMe::sortListContainer();
-		PmergeMe::sortVectorContainer();
+		// PmergeMe::sortVectorContainer();
 	}
 	catch ( std::exception& e)
 	{
