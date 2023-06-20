@@ -17,6 +17,7 @@ class PmergeMe{
 private:
 	static std::list<int>	_list;
 	static std::vector<int>	_vector;
+	static int				_insertSortingLimit;
 
 public:
 	static std::string	intToString( int num );
@@ -30,6 +31,7 @@ public:
 	static void						ListMergeSorting( std::list<int>& list, std::list<int>& left, std::list<int>& right );
 	static void						ListInsertSorting( std::list<int>::iterator begin, std::list<int>::iterator end );
 	static std::list<int>::iterator ListGetPrev( std::list<int>::iterator it );
+	static std::list<int>::iterator ListGetNext( std::list<int>::iterator it );
 	static bool						isListSorted( std::list<int>& list );
 	static void						printerList( std::string line );
 

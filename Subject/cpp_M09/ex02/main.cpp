@@ -57,6 +57,14 @@ Not:
 
 	https://www.geeksforgeeks.org/merge-sort-vs-insertion-sort/
 
+
+	"Insertion sort" teriminin Türkçe karşılığı "Ekleme sıralaması" veya "Yerleştirme sıralaması"dır.
+	Insertion sort, basit ve yaygın olarak kullanılan bir sıralama algoritmasıdır.
+	Bu algoritma, elemanları sıralanmış ve sıralanmamış olmak üzere iki bölüme ayırır.
+	Sıralanmış bölüm başlangıçta boştur ve sıralanmamış bölümdeki her eleman, uygun konumuna yerleştirilerek sıralanmış bölüme eklenir.
+	Bu işlem sırasıyla tüm elemanlar için tekrarlanır, böylece sıralanmış bölüm giderek büyür ve tüm elemanlar doğru sıralamaya göre yerleştirilir.
+	Insertion sort, küçük veri setlerinde etkili bir şekilde çalışan bir algoritmadır, ancak büyük veri setleri için performansı düşük olabilir.
+
 Eva Rules:
 
 */

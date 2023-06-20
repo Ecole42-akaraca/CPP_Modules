@@ -2,6 +2,7 @@
 
 std::list<int>		PmergeMe::_list;
 std::vector<int>	PmergeMe::_vector;
+int					PmergeMe::_insertSortingLimit = 100;
 
 std::string			PmergeMe::intToString( int num ){
 
@@ -60,9 +61,13 @@ void				PmergeMe::setContainers( int argc, char **argv ){
 	}
 }
 
+/*
+	start ve end herhangi bir özel birim belirtmez.
+	1 saniye = 10^6 us
+*/
 double				PmergeMe::measureTime(clock_t start, clock_t end){
-	double duration = static_cast<double>(end - start) / CLOCKS_PER_SEC;
-	double microseconds = duration * 1000000;
+	double duration = static_cast<double>(end - start) / CLOCKS_PER_SEC; // saniye cinsinden değerini elde etmiş oluruz.
+	double microseconds = duration * 1000000; // us cinsinden elde etmek için çarpıyoruz.
 	return microseconds;
 }
 
@@ -98,10 +103,14 @@ void				PmergeMe::printerList(std::string line){
 			break;
 		}
 		std::cout << *i;
-		if (std::next(i) != _list.end())
+		if (PmergeMe::ListGetNext(i) != _list.end())
 			std::cout << " ";
 	}
 	std::cout << std::endl;
+}
+
+std::list<int>::iterator PmergeMe::ListGetNext(std::list<int>::iterator it){
+	return ++it;
 }
 
 std::list<int>::iterator PmergeMe::ListGetPrev(std::list<int>::iterator it){
@@ -113,6 +122,7 @@ void				PmergeMe::ListMergeSorting(std::list<int>& list, std::list<int>& left, s
 	std::list<int>::iterator leftIt = left.begin();
 	std::list<int>::iterator rightIt = right.begin();
 
+	// İki list'te karşılaştırılıyor, küçük olan değer pushlanıyor.
 	while (leftIt != left.end() && rightIt != right.end()) {
 		if (*leftIt <= *rightIt) {
 			list.push_back(*leftIt);
@@ -123,6 +133,7 @@ void				PmergeMe::ListMergeSorting(std::list<int>& list, std::list<int>& left, s
 		}
 	}
 
+	// Pushlanmayan sayılar burada pushlanıyor.
 	while (leftIt != left.end()) {
 		list.push_back(*leftIt);
 		++leftIt;
@@ -176,15 +187,15 @@ void				PmergeMe::ListInsertSorting( std::list<int>::iterator begin, std::list<i
 		while (it2 != begin && *ListGetPrev(it2)  > temp)
 		{
 			*it2 = *ListGetPrev(it2);
-			--it2;
+			--it2; // it2'nin gösterdiği konumu bir önceki konuma hareket ettirir.
 		}
-		*it2 = temp;
+		*it2 = temp; // elemanın doğru konumuna yerleştirilmesi için kullanılır.
 	}
 }
 
 void				PmergeMe::ListMergeInsertSorting( std::list<int>& list ){
 
-	if (list.size() <= 100)
+	if ((int)list.size() <= _insertSortingLimit)
 	{
 		ListInsertSorting(list.begin(), list.end());
 	}
@@ -192,9 +203,7 @@ void				PmergeMe::ListMergeInsertSorting( std::list<int>& list ){
 	{
 
 		std::list<int> left, right;
-
-		/*int mid = list.size() / 2;
-
+		int mid = list.size() / 2;
 		std::list<int>::iterator it = list.begin();
 		for (int i = 0; i < mid; i++)
 		{
@@ -205,34 +214,31 @@ void				PmergeMe::ListMergeInsertSorting( std::list<int>& list ){
 		{
 			right.push_back(*it);
 			++it;
-		}*/
+		}
 
 		// std::list<int>::iterator middle = list.begin();
 		// std::advance(middle, list.size() / 2);
 
+		// for (std::list<int>::iterator it = list.begin(); it != middle; ++it) {
+		// 	left.push_back(*it);
+		// }
 
-		std::list<int>::iterator middle = std::next(list.begin(), list.size() / 2);
+		// for (std::list<int>::iterator it = middle; it != list.end(); ++it) {
+		// 	right.push_back(*it);
+		// }
 
-		for (std::list<int>::iterator it = list.begin(); it != middle; ++it) {
-			left.push_back(*it);
-		}
-
-		for (std::list<int>::iterator it = middle; it != list.end(); ++it) {
-			right.push_back(*it);
-		}
-
-		ListMergeInsertSorting(left);
+		ListMergeInsertSorting(left); // öncelikle bitmesi beklenen fonksiyon
 		ListMergeInsertSorting(right);
 
 		list.clear();
-		ListMergeSorting(list, left, right);
+		ListMergeSorting(list, left, right); // son girilen kısım
 	}
 }
 
 /*
 	'merge-insert sort algorithm'
 
-	merge sorting -> Argüman sayısı fazla olan yapıyı sıralmak için çok daha uygun
+	merge sorting -> Argüman sayısı fazla olan yapıyı sıralamak için çok daha uygun
 	insert sorting -> Argüman sayısı az olan yapıyı sıralamak için çok daha uygun
 
 	Bizden subject ikisini birlikte kullanmamızı istediğinden dolayı:
@@ -278,7 +284,9 @@ void				PmergeMe::printerVector(std::string line){
 			break;
 		}
 		std::cout << *i;
-		if (std::next(i) != _vector.end())
+		std::vector<int>::iterator l = i;
+		++l;
+		if (l != _vector.end())
 			std::cout << " ";
 	}
 	std::cout << std::endl;
@@ -342,7 +350,7 @@ void				PmergeMe::VectorMergeSorting( std::vector<int>& vector, int left, int mi
 
 void				PmergeMe::VectorMergeInsertSorting( std::vector<int>& vector, int left, int right ){
 
-	if (right - left <= 100)
+	if (right - left <= _insertSortingLimit)
 	{
 		VectorInsertSorting(vector, left, right);
 	}
