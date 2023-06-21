@@ -65,7 +65,7 @@ void		Bitcoin::setContainer( void ){
 		if (delimiterPos != std::string::npos)
 		{
 			date = line.substr(0, delimiterPos);
-			date.erase(std::remove(date.begin(), date.end(), ' '), date.end()); // space karakterini temizlemek için kullanıyorum.
+			date.erase(std::remove(date.begin(), date.end(), ' '), date.end()); // space karakterini temizlemek için kullanıyorum. // remove iterator döndürdüğünden dolayı iterator alan erase kullanıyorum.
 			iss.str(line.substr(delimiterPos + 1)); // double yerine string bir girdi varsa atlamak için kullanıyorum.
 			if (date.empty() || line[0] == '#') // date'in boş olmasını istemdiğim için ekledim.
 				continue;

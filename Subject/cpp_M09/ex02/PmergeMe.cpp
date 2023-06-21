@@ -34,7 +34,7 @@ void				PmergeMe::checkArg( int argc, char **argv ){
 		argLenght = std::string(argv[i]).size();
 		if (iss >> value)
 		{
-			if (value < 0 || (argLenght > PmergeMe::intToString(value).size()))
+			if (value < 1 || (argLenght > PmergeMe::intToString(value).size()))
 			{
 				iss.clear();
 				throw ( WrongInputs() );
@@ -201,7 +201,6 @@ void				PmergeMe::ListMergeInsertSorting( std::list<int>& list ){
 	}
 	else
 	{
-
 		std::list<int> left, right;
 		int mid = list.size() / 2;
 		std::list<int>::iterator it = list.begin();
@@ -250,7 +249,7 @@ void				PmergeMe::sortListContainer( void ){
 	PmergeMe::printerList("Before	(_list):	");
 	clock_t start = clock();
 	ListMergeInsertSorting(_list);
-	_list.sort();
+	// _list.sort();
 	clock_t end = clock();
 	PmergeMe::printerList("After	(_list):	");
 	std::cout << "Time to process a range of " << _list.size() << " elements with std::list<int> : ";
